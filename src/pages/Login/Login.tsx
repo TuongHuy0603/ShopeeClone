@@ -55,8 +55,8 @@ export default function Login() {
           <div className="lg:col-span-2 lg:col-start-4">
             <form className=' p-10 rounded bg-white shadow-sm' onSubmit={onSubmit}>
               <div className="text-2xl">Đăng Nhập</div>
-              <Input name='email' register={register} type='email' placeHolder='email' className='mt-8' errorMessage={errors.email?.message} />
-              <Input name='password' register={register} type='password' placeHolder='password' className='mt-2' errorMessage={errors.email?.message} />
+              <Input name='email' register={register} type='email' placeholder='email' className='mt-8' errorMessage={errors.email?.message} />
+              <Input name='password' register={register} type='password' placeholder='password' className='mt-2' errorMessage={errors.email?.message} />
               <div className='mt-3'>
                 <Button isLoading={loginMutation.isLoading}
                   disabled={loginMutation.isLoading} type='submit' className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600 justify-center items-center flex"> Đăng Nhập</Button>

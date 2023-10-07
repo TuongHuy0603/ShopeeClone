@@ -1,15 +1,23 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import InputNumber from 'src/components/InputNumber'
 import ProductRating from 'src/components/ProductRating'
-import { Product } from 'src/types/product.type'
+import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
+import Product from '../ProductList/Product'
+import QuantityController from 'src/components/QuantityController'
+import purchaseApi from 'src/apis/purchase.api'
+import { queryClient } from 'src/main'
+import { purchaseStatus } from 'src/constant/purchase'
+import { toast } from 'react-toastify'
+
 
 export default function ProductDetail() {
   const { nameId } = useParams()
+  const [buyCount, setBuyCount] = useState(1)
   const id = getIdFromNameId(nameId as string)
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
@@ -21,17 +29,25 @@ export default function ProductDetail() {
   const imageRef = useRef<HTMLImageElement>(null)
   const currentImages = useMemo(() => (product ? product?.images.slice(...curentIndexImages) : []), [product, curentIndexImages])
   useEffect(() => {
-    console.log(product?.price)
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
     }
   }, [product, curentIndexImages])
 
+  const queryConfig: ProductListConfig = { limit: '20', page: '1', category: product?.category._id }
+  const { data: productsData } = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => {
+      return productApi.getProducts(queryConfig)
+    }, keepPreviousData: true, enabled: Boolean(product), staleTime: 3 * 60 * 1000
+
+  })
+  const addToCartMutation = useMutation(purchaseApi.addToCard)
   const chooseActive = (img: string) => {
     setActiveImage(img)
   }
   const next = () => {
-    if (curentIndexImages[1] < (product as Product).images.length) {
+    if (curentIndexImages[1] < (product as ProductType).images.length) {
       setCurrentIndexImages((prev) => (
         [prev[0] + 1, prev[1] + 1]
       ))
@@ -42,6 +58,18 @@ export default function ProductDetail() {
       setCurrentIndexImages((prev) => (
         [prev[0] - 1, prev[1] - 1]
       ))
+  }
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
+
+  const addToCard = () => {
+    addToCartMutation.mutate({ buy_count: buyCount, product_id: product?._id as string }, {
+      onSuccess: (data) => {
+        toast.success(data.data.message)
+        queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchaseStatus.inCart }] })
+      }
+    })
   }
   const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -128,25 +156,13 @@ export default function ProductDetail() {
                 <div className="capitalize text-gray-500">
                   Số lượng
                 </div>
-                <div className="ml-10 flex items-center">
-                  <button className="flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
-                    </svg>
-                  </button>
-                  <InputNumber value={1} className='' classNameError='hidden' classNameInput='h-8 w-14 border-t border-b border-gray-300 p-1 text-center outline-none' />
-                  <button className="flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </button>
-                  <div className="ml-6 text-sm text-gray-500">
-                    {product?.quantity} sản phẩm có sẵn
-                  </div>
+                <QuantityController onDecrease={handleBuyCount} onIncrease={handleBuyCount} onType={handleBuyCount} max={product?.quantity} value={buyCount} />
+                <div className="ml-6 text-sm text-gray-500">
+                  {product?.quantity} sản phẩm có sẵn
                 </div>
               </div>
               <div className="mt-8 flex items-center">
-                <button className="flex h-12 items-center justify-center border rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5" >
+                <button className="flex h-12 items-center justify-center border rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5" onClick={addToCard} >
                   <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x={0} y={0} className="mr-[10px] h-5 w-5 fill-current stroke-orange text-orange"><g><g><polyline fill="none" points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} /><circle cx={6} cy="13.5" r={1} stroke="none" /><circle cx="11.5" cy="13.5" r={1} stroke="none" /></g><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1="7.5" x2="10.5" y1={7} y2={7} /><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1={9} x2={9} y1="8.5" y2="5.5" /></g></svg>
                   Thêm vào giỏ hàng
                 </button>
@@ -158,17 +174,35 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="mt-8 bg-white p-4 shadow">
-          <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
-            Mô tả sản phẩm
-          </div>
-          <div className="mx-4 mt-12 mb-4 text-sm leading-loose">
-            <div dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(product?.description || '')
-            }}>
+      <div className="mt-8">
+        <div className="container">
+          <div className="mt-8 bg-white p-4 shadow">
+            <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
+              Mô tả sản phẩm
+            </div>
+            <div className="mx-4 mt-12 mb-4 text-sm leading-loose">
+              <div dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(product?.description || '')
+              }}>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="mt-8">
+        <div className="container">
+          <div className="uppercase text-gray-400">
+            Có thể bạn cũng thích
+          </div>
+          {productsData && (
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              {productsData.data.data.products.map((product, index) => (
+                <div className="col-span-1" key={product._id}>
+                  <Product product={product} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div >

@@ -54,9 +54,9 @@ export default function Register() {
             <form className=' p-10 rounded bg-white shadow-sm' onSubmit={onSubmit} noValidate>
               <div className="text-2xl">Đăng ký</div>
 
-              <Input name='email' register={register} type='email' placeHolder='email' className='mt-8' errorMessage={errors.email?.message} />
-              <Input name='password' register={register} type='password' placeHolder='password' className='mt-2' errorMessage={errors.password?.message} />
-              <Input name='confirm_password' register={register} type='password' placeHolder='confirm password' className='mt-2' errorMessage={errors.confirm_password?.message} />
+              <Input name='email' register={register} type='email' placeholder='email' className='mt-8' errorMessage={errors.email?.message} />
+              <Input name='password' register={register} type='password' placeholder='password' className='mt-2' errorMessage={errors.password?.message} />
+              <Input name='confirm_password' register={register} type='password' placeholder='confirm password' className='mt-2' errorMessage={errors.confirm_password?.message} />
               <div className='mt-3'>
                 <Button isLoading={registerAccountMutation.isLoading}
                   disabled={registerAccountMutation.isLoading} className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600 flex justify-center items-center "> Đăng Ký</Button>

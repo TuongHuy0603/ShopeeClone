@@ -4,7 +4,6 @@ import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import path from 'src/constant/path'
-import { QueryConfig } from '../ProductList'
 import { Category } from 'src/types/category.type'
 import classNames from 'classnames'
 import InputNumber from 'src/components/InputNumber'
@@ -13,6 +12,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { NoUndefinedFiled } from 'src/types/utils.type'
 import RatingStars from 'src/pages/RatingStars'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 
 interface Props {
   queryConfig: QueryConfig
@@ -32,7 +32,8 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       search: createSearchParams({
         ...queryConfig,
         price_max: data.price_max,
-        price_min: data.price_min
+        price_min: data.price_min,
+        page: '1'
       }).toString()
     })
   })
@@ -55,7 +56,8 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
                 pathname: path.home,
                 search: createSearchParams({
                   ...queryConfig,
-                  category: categoryItem._id
+                  category: categoryItem._id,
+                  page: '1'
                 }).toString()
               }} className={classNames('relative px-2', {
                 ' text-orange font-semibold': isActive
@@ -84,7 +86,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
               control={control}
               name='price_min' render={({ field }) => {
                 return (
-                  <InputNumber type='text' placeHolder='đ Từ' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm' {...field} onChange={
+                  <InputNumber type='text' placeholder='đ Từ' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm' {...field} onChange={
                     (e) => {
                       field.onChange(e)
                       trigger('price_max')
@@ -99,7 +101,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
               control={control}
               name='price_max' render={({ field }) => {
                 return (
-                  <InputNumber type='text' placeHolder='đ Đến' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'  {...field} onChange={
+                  <InputNumber type='text' placeholder='đ Đến' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'  {...field} onChange={
                     (e) => {
                       field.onChange(e)
                       trigger('price_min')

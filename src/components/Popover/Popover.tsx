@@ -33,11 +33,11 @@ export default function Popover({ children, renderPopover, className }: Props) {
               top: y ?? 0,
               left: x ?? 0,
               width: 'max-content',
-              transformOrigin: `${middlewareData.arrow?.x}px top`
+              transformOrigin: `${middlewareData.arrow?.x}px`
             }} initial={{ opacity: 0 }}
               exit={{ opacity: 0 }}
               animate={{ opacity: 1 }}>
-              <span ref={arrowRef} className='border-x-transparent border-t-transparent border-b-white border-[11px] absolute translate-y-[-99%] z-[95%]' style={{
+              <span ref={arrowRef} className='border-x-transparent border-t-transparent border-b-white border-[11px] absolute translate-y-[-95%] z-[1000]' style={{
                 left: middlewareData.arrow?.x,
                 right: middlewareData.arrow?.y,
               }} />
