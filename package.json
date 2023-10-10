@@ -22,6 +22,7 @@
     "classnames": "^2.3.2",
     "dompurify": "^3.0.6",
     "framer-motion": "^10.15.0",
+    "immer": "^10.0.3",
     "lodash": "^4.17.21",
     "prosemirror-commands": "^1.5.2",
     "prosemirror-dropcursor": "^1.8.1",
