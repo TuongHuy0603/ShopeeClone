@@ -3,14 +3,13 @@ import React from 'react'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import path from 'src/constant/path'
-import { QueryConfig } from '../ProductList/ProductList'
 import { omit } from 'lodash'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 interface Props {
   queryConfig: QueryConfig
 }
 export default function RatingStars({ queryConfig }: Props) {
   const navigate = useNavigate()
-
   const handleFilterStar = (ratingFilter: number) => {
     navigate({
       pathname: path.home,
@@ -20,7 +19,7 @@ export default function RatingStars({ queryConfig }: Props) {
       }).toString()
     })
   }
-  const handleRemoveAll = (ratingFilter: number) => {
+  const handleRemoveAll = () => {
     navigate({
       pathname: path.home,
       search: createSearchParams(omit(queryConfig, ['price_max', 'price_min', 'category', 'rating_filter'])).toString()
@@ -53,7 +52,7 @@ export default function RatingStars({ queryConfig }: Props) {
         })}
       </ul>
       <div className='bg-gray-300 h-[1px] my-4' />
-      <Button onClick={() => { handleRemoveAll }} className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>Xóa tất cả</Button>
+      <Button onClick={handleRemoveAll} className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>Xóa tất cả</Button>
     </div>
   )
 }
