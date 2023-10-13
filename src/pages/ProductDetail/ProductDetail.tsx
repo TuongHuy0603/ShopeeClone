@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import InputNumber from 'src/components/InputNumber'
 import ProductRating from 'src/components/ProductRating'
@@ -13,6 +13,7 @@ import purchaseApi from 'src/apis/purchase.api'
 import { queryClient } from 'src/main'
 import { purchaseStatus } from 'src/constant/purchase'
 import { toast } from 'react-toastify'
+import path from 'src/constant/path'
 
 
 export default function ProductDetail() {
@@ -27,6 +28,7 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState('')
   const product = productDetailData?.data.data
   const imageRef = useRef<HTMLImageElement>(null)
+  const navigate = useNavigate()
   const currentImages = useMemo(() => (product ? product?.images.slice(...curentIndexImages) : []), [product, curentIndexImages])
   useEffect(() => {
     if (product && product.images.length > 0) {
@@ -88,6 +90,15 @@ export default function ProductDetail() {
     imageRef.current?.removeAttribute('style')
   }
 
+  const buyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
+    const purchase = res.data.data
+    navigate(path.cart, {
+      state: {
+        purchaseId: purchase._id
+      }
+    })
+  }
 
   return (
     <div className='bg-gray-200 py-6'>
@@ -166,7 +177,7 @@ export default function ProductDetail() {
                   <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x={0} y={0} className="mr-[10px] h-5 w-5 fill-current stroke-orange text-orange"><g><g><polyline fill="none" points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} /><circle cx={6} cy="13.5" r={1} stroke="none" /><circle cx="11.5" cy="13.5" r={1} stroke="none" /></g><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1="7.5" x2="10.5" y1={7} y2={7} /><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1={9} x2={9} y1="8.5" y2="5.5" /></g></svg>
                   Thêm vào giỏ hàng
                 </button>
-                <button className="ml-4 flex h-12 items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90" >
+                <button className="ml-4 flex h-12 items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90" onClick={buyNow} >
                   Mua ngay
                 </button>
               </div>

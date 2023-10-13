@@ -6,6 +6,7 @@ import { omit } from 'lodash'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import authApi from 'src/apis/auth.api'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
@@ -33,6 +34,7 @@ export default function Login() {
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
           const formError = error.response?.data.data
+          toast.error(formError?.password)
           if (formError) {
             Object.keys(formError).forEach((key) => {
               setError(key as keyof FormData, {
