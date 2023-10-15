@@ -50,7 +50,10 @@ class Http {
       },
       (error: AxiosError) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-        if ((error.response?.data as any).data.name === 'EXPIRED_TOKEN') {
+        if (
+          (error.response?.data as any).data.name === 'EXPIRED_TOKEN' &&
+          error.response?.status === HttpStatusCode.Unauthorized
+        ) {
           this.accessToken = ''
           clearLS()
           return
