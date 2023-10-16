@@ -55,14 +55,14 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
           <button className={classNames('h-8 px-4 text-sm capitalize text-canter', {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.sold), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.sold)
           })} onClick={() => handleSort(sortBy.sold)}>Bán chạy</button>
-          <select className={classNames("h-8 px-4 capitalize outline-none", {
+          <select className={classNames("h-8 px-4 py-0 capitalize outline-none border-none", {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.price), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.price)
-          })} value={''}
+          })}
             onChange={(e) => {
               handlePriceOrder(e.target.value as Exclude<ProductListConfig['order'], undefined>)
 
             }}>
-            <option className='bg-white text-black' value='' disabled>Giá</option>
+            <option className='bg-white text-black' defaultValue={''} value='' disabled>Giá</option>
             <option className='bg-white text-black' value={orderConstant.asc}>Giá: Thấp đến cao</option>
             <option className='bg-white text-black' value={orderConstant.desc}>Giá: Cao đến thấp</option>
           </select>

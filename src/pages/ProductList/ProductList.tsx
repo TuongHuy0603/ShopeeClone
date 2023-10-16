@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+
 import AsideFilter from './AsideFilter'
 import SortProductList from './SortProductList'
 import Product from './Product'
-import useQueryParams from 'src/hooks/useQueryParams'
 import { useQuery } from '@tanstack/react-query'
 import productApi from 'src/apis/product.api'
 import Paginate from 'src/components/Paginate'
 import { ProductListConfig } from 'src/types/product.type'
-import { omitBy, isUndefined } from 'lodash'
+import banner from '/src/assets/images/banner.jpg'
+import trend from '/src/assets/images/trend.jpg'
+import sale from '/src/assets/images/sale.png'
+import sale2 from '/src/assets/images/sale2.jpg'
+import sale3 from '/src/assets/images/sale3.jpg'
+import { Button, Carousel } from 'flowbite-react';
 import categoryApi from 'src/apis/category.api'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 
@@ -29,7 +33,39 @@ export default function ProductList() {
   })
   return (
     <div className='bg-gray-200 py-6'>
+
       <div className="container">
+        <div className="grid grid-cols-12 gap-5 pb-5">
+          <div className="col-span-8">
+            <div className=" h-[100%] flex-grow-0 flex">
+              <Carousel pauseOnHover >
+                <img
+                  alt=".."
+                  src={banner}
+                />
+                <img
+                  alt="..."
+                  src={sale2}
+                />
+                <img
+                  alt="..."
+                  src={sale3}
+                />
+              </Carousel>
+            </div>
+
+          </div>
+          <div className="col-span-4 flex items-center flex-col justify-center">
+            <img className='mb-3'
+              alt=".."
+              src={trend}
+            />
+            <img
+              alt="..."
+              src={sale}
+            />
+          </div>
+        </div>
         {productsData && (
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-3">

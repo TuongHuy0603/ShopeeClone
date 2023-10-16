@@ -1,7 +1,7 @@
 const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', 'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'],
   corePlugins: {
     container: false
   },
@@ -13,6 +13,8 @@ module.exports = {
     }
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('flowbite/plugin'),
     plugin(function ({ addComponents, theme }) {
       addComponents({
         '.container': {
@@ -22,7 +24,6 @@ module.exports = {
           paddingLeft: theme('spacing.4')
         }
       })
-    }),
-    require('@tailwindcss/line-clamp')
+    })
   ]
 }

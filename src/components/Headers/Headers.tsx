@@ -5,13 +5,10 @@ import Popover from '../Popover'
 import { AppContext } from 'src/contexts/app.context'
 import { useQuery } from '@tanstack/react-query'
 import path from 'src/constant/path'
-import useQueryConfig from 'src/hooks/useQueryConfig'
-
 import { purchaseStatus } from 'src/constant/purchase'
 import purchaseApi from 'src/apis/purchase.api'
 import noproduct from '/src/assets/images/no-product.png'
 import { formatCurrency } from 'src/utils/utils'
-
 import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
 export default function Headers() {
@@ -26,6 +23,7 @@ export default function Headers() {
   const purchasesInCart = purchasesInCartData?.data.data
   return (
     <div className="pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white">
+
       <div className="container">
         <NavHeader />
         <div className='grid grid-cols-12 gap-4 mt-4 items-end'>
@@ -42,6 +40,7 @@ export default function Headers() {
               </button>
             </div>
           </form>
+
           <div className='col-span-1 flex items-center align-middle'>
 
             <Popover renderPopover={<div className="bg-white shadow-md relative shadow-md rounded-sm border  border-gray-200 max-w-[400px]  text-sm">
