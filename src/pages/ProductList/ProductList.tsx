@@ -33,34 +33,33 @@ export default function ProductList() {
   })
   return (
     <div className='bg-gray-200 py-6'>
-
       <div className="container">
-        <div className="grid grid-cols-12 gap-5 pb-5">
-          <div className="col-span-8">
-            <div className=" h-[100%] flex-grow-0 flex">
+        <div className="grid gid-cols-1 md:grid-cols-12 h-full gap-3 pb-5">
+          <div className="col-span-12 md:col-span-8 h-[100%]">
+            <div className="h-[200px] md:h-[100%] ">
               <Carousel pauseOnHover >
-                <img
+                <img className='h-full'
                   alt=".."
                   src={banner}
                 />
-                <img
+                <img className='h-full'
                   alt="..."
                   src={sale2}
                 />
-                <img
+                <img className='h-full'
                   alt="..."
                   src={sale3}
                 />
               </Carousel>
             </div>
-
           </div>
-          <div className="col-span-4 flex items-center flex-col justify-center">
-            <img className='mb-3'
+          <div className="col-span-12 md:col-span-4 h-auto flex items-center flex-col justify-center ">
+            <img className='mb-3 rounded'
               alt=".."
               src={trend}
             />
             <img
+              className='rounded'
               alt="..."
               src={sale}
             />

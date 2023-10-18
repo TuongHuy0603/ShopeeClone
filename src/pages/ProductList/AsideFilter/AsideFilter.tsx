@@ -23,7 +23,7 @@ const priceSchema = schema.pick(['price_max', 'price_min'])
 export default function AsideFilter({ queryConfig, categories }: Props) {
   const { category } = queryConfig
   const navigate = useNavigate()
-  const { control, handleSubmit, trigger, watch, formState: { errors } } = useForm<FormData>({
+  const { control, handleSubmit, trigger, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(priceSchema)
   })
   const onSubmit = handleSubmit((data) => {
@@ -40,7 +40,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
   console.log(queryConfig)
   return (
     <div className='py-4'>
-      <Link to={path.home} className={classNames('flex items-center font-bold', {
+      <Link to={path.home} className={classNames('flex items-center md:text-left text-center   font-bold', {
         'text-orange': !category
       })}>
         <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current"><g fillRule="evenodd" stroke="none" strokeWidth={1}><g transform="translate(-373 -208)"><g transform="translate(155 191)"><g transform="translate(218 17)"><path d="m0 2h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /><path d="m0 6h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /><path d="m0 10h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /></g></g></g></g></svg>
@@ -51,7 +51,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
         {categories.map((categoryItem, index) => {
           const isActive = category === categoryItem._id
           return (
-            <li className='py-3 pl-2' key={index}>
+            <li className='py-3 pl-2  md:text-left text-center  ' key={index}>
               <Link to={{
                 pathname: path.home,
                 search: createSearchParams({
@@ -59,7 +59,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
                   category: categoryItem._id,
                   page: '1'
                 }).toString()
-              }} className={classNames('relative px-2', {
+              }} className={classNames('relative p-0 md:px-2', {
                 ' text-orange font-semibold': isActive
               })}>
                 {isActive && (
@@ -71,7 +71,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
           )
         })}
       </ul>
-      <Link to={path.home} className='flex items-center font-bold mt-4 uppercase'>
+      <Link to={path.home} className='flex items-center font-bold mt-4 uppercase md:text-left md:text-left text-center  '>
         <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x={0} y={0} className="mr-3 h-4 w-3 fill-current stroke-current"><g><polyline fill="none" points="5.5 13.2 5.5 5.8 1.5 1.2 13.5 1.2 9.5 5.8 9.5 10.2" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} /></g></svg>
         Bộ lọc tìm kiếm
       </Link>
