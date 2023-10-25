@@ -12,6 +12,7 @@ import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import { AppContext } from 'src/contexts/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
+import { setProfileToLS } from 'src/utils/auth'
 import { schema, Schema } from 'src/utils/rule'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 type FormData = Pick<Schema, "email" | "password">

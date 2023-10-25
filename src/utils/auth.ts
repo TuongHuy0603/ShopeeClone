@@ -12,11 +12,8 @@ export const getAccessTokenFromLS = () => localStorage.getItem('access_token') |
 
 export const getProfileFromLS = () => {
   const result = localStorage.getItem('profile')
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (result && typeof result !== 'undefined') {
-    JSON.parse(result)
-  } else {
-    return null
+  if (result) {
+    return JSON.parse(result)
   }
 }
 

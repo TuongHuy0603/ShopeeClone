@@ -15,7 +15,7 @@ interface AppContextInterface {
 const initialAppContext: AppContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLS()),
   setIsAuthenticated: () => null,
-  profile: getProfileFromLS() as Users | null,
+  profile: getProfileFromLS() as unknown as Users | null,
   setProfile: () => null,
   extendPurchases: [],
   setExtendPurchases: () => null

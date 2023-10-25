@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Popover from '../Popover'
 import { AppContext } from 'src/contexts/app.context'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -6,9 +6,12 @@ import authApi from 'src/apis/auth.api'
 import { purchaseStatus } from 'src/constant/purchase'
 import { Link } from 'react-router-dom'
 import path from 'src/constant/path'
+import { getProfileFromLS } from 'src/utils/auth'
+import { getAvatarURL } from 'src/utils/utils'
 
 export default function NavHeader() {
   const queryClient = useQueryClient()
+
   const { setIsAuthenticated, profile, setProfile, isAuthenticated } = useContext(AppContext)
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
@@ -24,9 +27,11 @@ export default function NavHeader() {
       }
     }
   })
+
   const handleLogout = () => {
     logoutMutation.mutate()
   }
+
   return (
     <div className="flex justify-end" >
       <Popover className='flex items-center py-1 hover:text-gray-300 cursor-pointer' renderPopover={<div className="bg-white shadow-md relative shadow-md rounded-sm border border-gray-200">
@@ -57,7 +62,7 @@ export default function NavHeader() {
           </div>
         }>
           <div className="w-5 h-6 mr-2 flex flex-shrink-0">
-            <img src="https://i.ex-cdn.com/mgn.vn/files/content/2023/06/16/lmht-my-nu-ahri-don-tim-game-thu-qua-loat-art-hong-canh-sen-cuc-dep_5-1958.jpg" alt="avatar" className="w-full h-full object-cover rounded-full" />
+            <img src={getAvatarURL(profile?.avatar)} alt="avatar" className="w-full h-full object-cover rounded-full" />
           </div>
           <div>
             {profile?.email}

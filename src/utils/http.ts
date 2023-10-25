@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AuthResponse } from 'src/types/auth.type'
 import { clearLS, getAccessTokenFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
 import path from 'src/constant/path'
+import config from 'src/constant/config'
 
 class Http {
   instance: AxiosInstance
@@ -14,7 +15,7 @@ class Http {
   constructor() {
     this.accessToken = getAccessTokenFromLS()
     this.instance = axios.create({
-      baseURL: 'https://api-ecom.duthanhduoc.com',
+      baseURL: config.baseURL,
       timeout: 1000,
       headers: {
         'Content-Type': 'application/json'
@@ -37,18 +38,19 @@ class Http {
         console.log(response)
         const { url } = response.config
         console.log('this.url ', url)
-        if (url === path.login || (url === path.register && url !== 'undefined')) {
+        if (url === path.login || (url === path.register && typeof url !== 'undefined')) {
           const data = response.data as AuthResponse
           this.accessToken = data.data.access_token
           setAccessTokenToLS(this.accessToken)
           setProfileToLS(data.data.user)
-        } else if (url === path.logout && url !== 'undefined') {
+        } else if (url === path.logout && typeof url !== 'undefined') {
           this.accessToken = ''
           clearLS()
         }
         return response
       },
       (error: AxiosError) => {
+        console.log(error.response)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
         if (
           (error.response?.data as any).data.name === 'EXPIRED_TOKEN' &&
@@ -58,11 +60,20 @@ class Http {
           clearLS()
           return
         }
+
+        if (error.code === 'ERR_NETWORK') {
+          toast.error(error.message)
+        }
+
+        if (error.response?.status === HttpStatusCode.PayloadTooLarge) {
+          toast.error('Kích thước file không được lớn hơn 1MB')
+        }
         if (error.response?.status !== HttpStatusCode.UnprocessableEntity) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-redundant-type-constituents
           const data: any | undefined = error.response?.data
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          const message = data.message || error.message
+
+          const message = data?.message || error.message
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           toast.error(message)
         }

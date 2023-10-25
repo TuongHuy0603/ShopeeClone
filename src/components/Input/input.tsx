@@ -12,10 +12,9 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 export default function Input({ type, errorMessage, placeholder, className, name, register, rules, classNameInput = 'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm', classNameError = "mt-1 text-red-600 min-h-[1.25rem] text-sm", ...rest }: Props) {
   const registerResult = register && name ? register(name, rules) : {}
-  console.log(registerResult)
   return (
     <div className={className}>
-      <input autoComplete='on' type={type} className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm' placeholder={placeholder} {...registerResult} {...rest} />
+      <input autoComplete='on' type={type} className={classNameInput} placeholder={placeholder} {...registerResult} {...rest} />
       <div className={classNameError}>
         {errorMessage}
       </div>
