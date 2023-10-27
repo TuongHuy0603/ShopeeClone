@@ -23,7 +23,6 @@ export default function Headers() {
   const purchasesInCart = purchasesInCartData?.data.data
   return (
     <div className="pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white">
-
       <div className="container">
         <NavHeader />
         <div className='grid grid-cols-12 gap-4 mt-4 items-end'>
@@ -40,11 +39,8 @@ export default function Headers() {
               </button>
             </div>
           </form>
-
           <div className='col-span-1 flex items-center align-middle'>
-
             <Popover renderPopover={<div className="bg-white shadow-md relative shadow-md rounded-sm border  border-gray-200 max-w-[400px]  text-sm">
-
               {purchasesInCart && purchasesInCart.length > 0 ? (
                 <div className="p-2">
                   <div className="text-gray-400 capitalize">
@@ -86,7 +82,6 @@ export default function Headers() {
                   </div>
                 </div>
               )}
-
             </div>}>
               <Link to="/" className='relative'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8">
@@ -96,7 +91,6 @@ export default function Headers() {
                   <span className='absolute top-[-10px] right-[-10px] rounded-full px-[9px] py-[1px] bg-white text-orange'>{purchasesInCart?.length}</span>)}
               </Link>
             </Popover>
-
           </div>
         </div>
       </div >
