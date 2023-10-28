@@ -33,7 +33,6 @@ export default function HistoryPurchase() {
       }).toString()
     }} className={classNames('flex flex-1 irtems-center justify-center border-b-2 bg-white py-4 text-center', { 'border-b-orange text-orange': status === tab.status, 'border-b-black/10 text-gray-900': status !== tab.status })}>{tab.name}</Link>
   ))
-  console.log('pr', purchasesInCart)
   return (
     <div>
       <div className="overflow-x-auto">
