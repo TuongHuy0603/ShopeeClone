@@ -11,7 +11,7 @@ import trend from '/src/assets/images/trend.jpg'
 import sale from '/src/assets/images/sale.png'
 import sale2 from '/src/assets/images/sale2.jpg'
 import sale3 from '/src/assets/images/sale3.jpg'
-import { Button, Carousel } from 'flowbite-react';
+import { Carousel } from 'flowbite-react';
 import categoryApi from 'src/apis/category.api'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 
@@ -73,7 +73,7 @@ export default function ProductList() {
             <div className="col-span-9">
               <SortProductList queryConfig={queryConfig} pageSize={productsData.data.data.pagination.page_size} />
               <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {productsData.data.data.products.map((product, index) => (
+                {productsData.data.data.products.map((product) => (
                   <div className="col-span-1 " key={product._id}>
                     <Product product={product} />
                   </div>

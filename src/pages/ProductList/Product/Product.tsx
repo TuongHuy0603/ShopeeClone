@@ -1,5 +1,4 @@
 
-import React from 'react'
 import { Link } from 'react-router-dom'
 import ProductRating from 'src/components/ProductRating'
 import path from 'src/constant/path'

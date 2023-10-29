@@ -1,4 +1,3 @@
-import React from 'react'
 import NavHeader from '../NavHeader'
 import { Link } from 'react-router-dom'
 import path from 'src/constant/path'

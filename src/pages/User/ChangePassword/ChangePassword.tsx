@@ -17,7 +17,7 @@ const passwordSchema = userSchema.pick(['password', 'confirm_password', 'new_pas
 
 export default function ChangePassword() {
   const updateProfileMutation = useMutation(userApi.updateProfile)
-  const { register, formState: { errors }, reset, setError, handleSubmit, setValue } = useForm<FormData>({
+  const { register, formState: { errors }, reset, setError, handleSubmit } = useForm<FormData>({
     defaultValues: {
       password: '',
       new_password: '',
@@ -33,9 +33,7 @@ export default function ChangePassword() {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
         const formError = error.response?.data.data
         if (formError) {
-          console.log(formError)
           Object.keys(formError).forEach((key) => {
-            console.log(formError[key as keyof FormData])
             setError(key as keyof FormData, {
               message: formError[key as keyof FormData],
               type: "Server"

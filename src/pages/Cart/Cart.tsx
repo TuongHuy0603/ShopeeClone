@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import purchaseApi from 'src/apis/purchase.api'
 import Button from 'src/components/Button'
 import QuantityController from 'src/components/QuantityController'
 import path from 'src/constant/path'
 import { purchaseStatus } from 'src/constant/purchase'
-import { ExtendedPurchases, Purchase } from 'src/types/purchase.type'
+import { Purchase } from 'src/types/purchase.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 import { produce } from 'immer'
 import noproduct from '/src/assets/images/no-product.png'
@@ -116,7 +116,7 @@ export default function Cart() {
   }
   const handleDelete = (purchaseIndex: number) => () => {
     const purchaseId = extendPurchases[purchaseIndex]._id
-    console.log(purchaseId, purchaseIndex)
+
     deletePurchasesMutation.mutate([purchaseId])
   }
   const handleDeleteManyPurchase = () => {

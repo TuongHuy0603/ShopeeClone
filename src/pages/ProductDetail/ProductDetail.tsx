@@ -116,7 +116,7 @@ export default function ProductDetail() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                   </svg>
                 </button>
-                {currentImages.map((img, index) => {
+                {currentImages.map((img) => {
                   const isActive = img === activeImage
                   return (
                     <div className="relative w-full pt-[100%]" onMouseEnter={() => {
@@ -206,7 +206,7 @@ export default function ProductDetail() {
           </div>
           {productsData && (
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-              {productsData.data.data.products.map((product, index) => (
+              {productsData.data.data.products.map((product) => (
                 <div className="col-span-1" key={product._id}>
                   <Product product={product} />
                 </div>

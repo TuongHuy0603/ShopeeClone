@@ -1,9 +1,9 @@
-import React from 'react'
+
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { ProductListConfig } from 'src/types/product.type'
 import path from 'src/constant/path'
 import classNames from 'classnames'
-import { sortBy, order as orderConstant, order } from 'src/constant/sortBy'
+import { sortBy, order as orderConstant } from 'src/constant/sortBy'
 import { omit } from 'lodash'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 

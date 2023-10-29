@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios, { AxiosError } from 'axios'
-import axiox, { type AxiosInstance } from 'axios'
+import { type AxiosInstance } from 'axios'
 import HttpStatusCode from 'src/constant/httpStatusCode.enum'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthResponse } from 'src/types/auth.type'
 import { clearLS, getAccessTokenFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
@@ -35,9 +35,7 @@ class Http {
     )
     this.instance.interceptors.response.use(
       (response) => {
-        console.log(response)
         const { url } = response.config
-        console.log('this.url ', url)
         if (url === path.login || (url === path.register && typeof url !== 'undefined')) {
           const data = response.data as AuthResponse
           this.accessToken = data.data.access_token
@@ -50,10 +48,9 @@ class Http {
         return response
       },
       (error: AxiosError) => {
-        console.log(error.response)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
         if (
-          (error.response?.data as any).data.name === 'EXPIRED_TOKEN' &&
+          (error.response?.data as any)?.data?.name === 'EXPIRED_TOKEN' &&
           error.response?.status === HttpStatusCode.Unauthorized
         ) {
           this.accessToken = ''

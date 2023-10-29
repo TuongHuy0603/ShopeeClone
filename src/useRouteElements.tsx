@@ -1,10 +1,9 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import ProductList from './pages/ProductList'
-import Login from './pages/Login'
 import Register from './pages/Register'
 import RegisterLayout from './layout/RegisterLayout'
 import MainLayout from './layout/MainLayout'
-import { useContext } from 'react'
+import { useContext, lazy, Suspense } from 'react'
 import { AppContext } from './contexts/app.context'
 import path from './constant/path'
 import ProductDetail from './pages/ProductDetail'
@@ -16,6 +15,7 @@ import HistoryPurchase from './pages/User/HistoryPurchase'
 import Profile from './pages/User/Profile'
 import Notfound from './pages/NotFound'
 
+const Login = lazy(() => import('./pages/Login'))
 const ProtectedRoute = () => {
   const { isAuthenticated } = useContext(AppContext)
   return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
@@ -103,7 +103,9 @@ export default function useRouteElements() {
         {
           path: path.login,
           element: <RegisterLayout>
-            <Login />
+            <Suspense>
+              <Login />
+            </Suspense>
           </RegisterLayout>
         },
         {

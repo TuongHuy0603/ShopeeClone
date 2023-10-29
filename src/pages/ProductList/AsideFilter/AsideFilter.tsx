@@ -1,8 +1,6 @@
 
-import React from 'react'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
-import Input from 'src/components/Input'
 import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
 import classNames from 'classnames'
@@ -37,7 +35,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       }).toString()
     })
   })
-  console.log(queryConfig)
+
   return (
     <div className='py-4'>
       <Link to={path.home} className={classNames('flex items-center md:text-left text-center   font-bold', {

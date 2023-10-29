@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Input from 'src/components/Input'
 import { useMutation } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
-import { omit, pick } from 'lodash'
+import { pick } from 'lodash'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
@@ -18,7 +18,7 @@ export default function Register() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
-  const { register, handleSubmit, getValues, setError, formState: { errors } } = useForm<FormData>({ resolver: yupResolver(schema) })
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>({ resolver: yupResolver(schema) })
   const registerAccountMutation = useMutation({
     mutationFn: (body: Pick<FormData, 'email' | 'password' | 'confirm_password'>) => authApi.registerAccount(body)
   })

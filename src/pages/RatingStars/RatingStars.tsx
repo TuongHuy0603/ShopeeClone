@@ -1,6 +1,5 @@
 
-import React from 'react'
-import { Link, createSearchParams, useNavigate } from 'react-router-dom'
+import { createSearchParams, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import path from 'src/constant/path'
 import { omit } from 'lodash'

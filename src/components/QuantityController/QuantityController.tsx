@@ -9,7 +9,7 @@ interface Props extends InputNumberProps {
   classNameWrapper?: string
 }
 
-export default function QuantityController({ max, onFocusOut, onIncrease, onDecrease, onType, classNameWrapper = 'ml-10 ', value, ...rest }: Props) {
+export default function QuantityController({ max, onFocusOut, onIncrease, onDecrease, onType, classNameWrapper = 'ml-10 ', value }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let _value = Number(e.target.value)
     if (max !== undefined && _value > max) {

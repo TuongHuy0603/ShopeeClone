@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { InputHTMLAttributes, forwardRef } from 'react'
-import type { RegisterOptions, UseFormRegister } from 'react-hook-form'
-import { ref } from 'yup'
+import type { RegisterOptions } from 'react-hook-form'
 export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string

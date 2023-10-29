@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { omit } from 'lodash'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,7 +11,6 @@ import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import { AppContext } from 'src/contexts/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
-import { setProfileToLS } from 'src/utils/auth'
 import { schema, Schema } from 'src/utils/rule'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 type FormData = Pick<Schema, "email" | "password">
@@ -21,7 +19,7 @@ export default function Login() {
   const navigate = useNavigate()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const loginSchema = schema.pick(["email", "password"])
-  const { register, handleSubmit, watch, setError, formState: { errors } } = useForm<FormData>({ resolver: yupResolver(loginSchema) })
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<FormData>({ resolver: yupResolver(loginSchema) })
   const loginMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.login(body)
   })

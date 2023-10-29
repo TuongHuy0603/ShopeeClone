@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function ProductRating({ rating,
   activeClassName = "h-3 w-3 fill-yellow-300 text-yellow-300",
