@@ -12,11 +12,13 @@ import purchaseApi from 'src/apis/purchase.api'
 import { purchaseStatus } from 'src/constant/purchase'
 import { toast } from 'react-toastify'
 import path from 'src/constant/path'
+import { useTranslation } from 'react-i18next'
 
 
 export default function ProductDetail() {
   const queryClient = useQueryClient()
   const { nameId } = useParams()
+  const { t } = useTranslation('product')
   const [buyCount, setBuyCount] = useState(1)
   const id = getIdFromNameId(nameId as string)
   const { data: productDetailData } = useQuery({
@@ -33,6 +35,7 @@ export default function ProductDetail() {
     if (product && product.images.length > 0) {
       setActiveImage(product.images[0])
     }
+    window.scrollTo({ top: 0 });
   }, [product, curentIndexImages])
 
   const queryConfig: ProductListConfig = { limit: '20', page: '1', category: product?.category._id }
@@ -141,14 +144,14 @@ export default function ProductDetail() {
               </h1>
               <div className="mt-8 flex items-center">
                 <div className="flex items-center">
-                  <span className="mt-1 border-b border-b-orange text-orange">
+                  <span className="mt-1 border-b mr-2 border-b-orange text-orange">
                     {product?.rating}
                   </span>
                   <ProductRating rating={product?.rating || 0} activeClassName='fill-orange text-orange h-4 w-4' nonactiveClassName='fill-gray-300 text-gray-300 h-4 w-4' />
                 </div>
                 <div className="mx-4 h-4 bg-gray-300 w-[1px]">
                   <span className='ml-[15px]'>{formatNumberToSocialStyle(product?.sold || 0)}</span>
-                  <span className="ml-1 text-gray-500 whitespace-nowrap">Đã bán</span>
+                  <span className="ml-1 text-gray-500 whitespace-nowrap">{t("product detail.sold")}</span>
                 </div>
               </div>
               <div className="mt-8 flex items-center bg-gray-50 px-5 py-4">
@@ -159,25 +162,25 @@ export default function ProductDetail() {
                   đ{formatCurrency(product?.price || 0)}
                 </div>
                 <div className="ml-4 rounded-sm bg-orange px-1 py-[2px] text-xs font-semibold uppercase text-white">
-                  {rateSale(product?.price_before_discount || 0, product?.price || 0)} giảm
+                  {rateSale(product?.price_before_discount || 0, product?.price || 0)} {t("product detail.off")}
                 </div>
               </div>
               <div className="mt-8 flex items-center">
-                <div className="capitalize text-gray-500">
-                  Số lượng
+                <div className="capitalize mr-5  text-gray-500">
+                  {t("product detail.quantity")}
                 </div>
                 <QuantityController onDecrease={handleBuyCount} onIncrease={handleBuyCount} onType={handleBuyCount} max={product?.quantity} value={buyCount} />
                 <div className="ml-6 text-sm text-gray-500">
-                  {product?.quantity} sản phẩm có sẵn
+                  {product?.quantity} {t('product detail.available')}
                 </div>
               </div>
               <div className="mt-8 flex items-center">
                 <button className="flex h-12 items-center justify-center border rounded-sm border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5" onClick={addToCard} >
                   <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x={0} y={0} className="mr-[10px] h-5 w-5 fill-current stroke-orange text-orange"><g><g><polyline fill="none" points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} /><circle cx={6} cy="13.5" r={1} stroke="none" /><circle cx="11.5" cy="13.5" r={1} stroke="none" /></g><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1="7.5" x2="10.5" y1={7} y2={7} /><line fill="none" strokeLinecap="round" strokeMiterlimit={10} x1={9} x2={9} y1="8.5" y2="5.5" /></g></svg>
-                  Thêm vào giỏ hàng
+                  {t('product detail.add')}
                 </button>
                 <button className="ml-4 flex h-12 items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90" onClick={buyNow} >
-                  Mua ngay
+                  {t('product detail.buy')}
                 </button>
               </div>
             </div>
@@ -188,7 +191,7 @@ export default function ProductDetail() {
         <div className="container">
           <div className="mt-8 bg-white p-4 shadow">
             <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
-              Mô tả sản phẩm
+              {t("product detail.description")}
             </div>
             <div className="mx-4 mt-12 mb-4 text-sm leading-loose">
               <div dangerouslySetInnerHTML={{
@@ -202,7 +205,7 @@ export default function ProductDetail() {
       <div className="mt-8">
         <div className="container">
           <div className="uppercase text-gray-400">
-            Có thể bạn cũng thích
+            {t("product detail.may like")}
           </div>
           {productsData && (
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">

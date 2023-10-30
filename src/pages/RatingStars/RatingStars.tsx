@@ -4,11 +4,13 @@ import Button from 'src/components/Button'
 import path from 'src/constant/path'
 import { omit } from 'lodash'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 interface Props {
   queryConfig: QueryConfig
 }
 export default function RatingStars({ queryConfig }: Props) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const handleFilterStar = (ratingFilter: number) => {
     navigate({
       pathname: path.home,
@@ -26,7 +28,7 @@ export default function RatingStars({ queryConfig }: Props) {
   }
   return (
     <div>
-      <div className="text-sm">Đánh giá</div>
+      <div className="text-sm">{t("aside filter.rating")}</div>
       <ul className="my-3">
         {Array(5).fill(0).map((_, index) => {
           return (
@@ -45,13 +47,13 @@ export default function RatingStars({ queryConfig }: Props) {
                 })}
               </div>
 
-              {index !== 0 && <span>Trở lên</span>}
+              {index !== 0 && <span>{t("aside filter.up")}</span>}
             </li>
           )
         })}
       </ul>
       <div className='bg-gray-300 h-[1px] my-4' />
-      <Button onClick={handleRemoveAll} className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>Xóa tất cả</Button>
+      <Button onClick={handleRemoveAll} className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>{t("aside filter.clear")}</Button>
     </div>
   )
 }

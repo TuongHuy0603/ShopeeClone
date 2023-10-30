@@ -11,9 +11,11 @@ import noproduct from '/src/assets/images/no-product.png'
 import { formatCurrency } from 'src/utils/utils'
 import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
+import { useTranslation } from 'react-i18next'
 export default function Headers() {
   const { onSubmitSearch, register } = useSearchProducts()
   const MAX_PURCHASES = 5
+  const { t } = useTranslation(['product'])
   const { isAuthenticated } = useContext(AppContext)
   const { data: purchasesInCartData } = useQuery({
     queryKey: ['purchases', { status: purchaseStatus.inCart }],
@@ -32,7 +34,7 @@ export default function Headers() {
           </Link>
           <form className='col-span-7 md:col-span-9 ' onSubmit={onSubmitSearch}>
             <div className='bg-white rounded-sm p-1 flex'>
-              <input placeholder='Tìm kiếm' type='text' className='w-[50%] md:w-full f text-black px-3 py-2 flex-grow focus:ring-offset-transparent	focus:ring-transparent border-none outline-none bg-transparent' {...register('name')} />
+              <input placeholder={t('product detail.search')} type='text' className='w-[50%] md:w-full f text-black px-3 py-2 flex-grow focus:ring-offset-transparent	focus:ring-transparent border-none outline-none bg-transparent' {...register('name')} />
               <button className="rounded-sm py-2 px-6 flex-shrink-0 bg-orange hover:opacity-90"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
               </svg>
@@ -44,7 +46,7 @@ export default function Headers() {
               {purchasesInCart && purchasesInCart.length > 0 ? (
                 <div className="p-2">
                   <div className="text-gray-400 capitalize">
-                    Sản phẩm mới thêm
+                    {t('product detail.recent cart')}
                   </div>
                   <div className='mt-5 '>
                     {purchasesInCart.slice(0, MAX_PURCHASES).map((purchase) => (
@@ -67,10 +69,10 @@ export default function Headers() {
                   </div>
                   <div className="flex mt-6 items-center justify-between">
                     <div className="capitalize text-xs text-gray-500">
-                      {purchasesInCart.length > MAX_PURCHASES ? purchasesInCart.length - MAX_PURCHASES : ""}  Thêm vào giỏ hàng
+                      {purchasesInCart.length > MAX_PURCHASES ? `+${purchasesInCart.length - MAX_PURCHASES} ` : ""}{t('product detail.add')}
                     </div>
                     <Link to={path.cart} className="capitalize bg-orange px-4 py-2 hover:bg-opacity-90 rounded-sm text-white">
-                      Xem giỏ hàng
+                      {t('product detail.view cart')}
                     </Link>
                   </div>
                 </div>
@@ -78,7 +80,7 @@ export default function Headers() {
                 <div className="p-2 flex h-[300px] w-[300px] items-center flex-col justify-center">
                   <img src={noproduct} alt='no purchases' className='h-24 w-24' />
                   <div className="mt-3 capitalize">
-                    Chưa có sản phẩm
+                    {t('product detail.empty cart')}
                   </div>
                 </div>
               )}

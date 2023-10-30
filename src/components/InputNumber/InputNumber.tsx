@@ -10,7 +10,7 @@ export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> 
   placeholder?: string
   ref?: string
 }
-const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ type, errorMessage, className, classNameInput = 'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm', classNameError = "mt-1 text-red-600 min-h-[1.25rem] text-sm", onChange, ...rest }, ref) => {
+const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ type, errorMessage, className, placeholder, classNameInput = 'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm', classNameError = "mt-1 text-red-600 min-h-[1.25rem] text-sm", onChange, ...rest }, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     //check number
@@ -20,7 +20,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ type, erro
   }
   return (
     <div className={className} >
-      <input className={classNameInput} onChange={handleChange} {...rest} ref={ref} />
+      <input className={classNameInput} onChange={handleChange} {...rest} ref={ref} placeholder={placeholder} />
       <div className={classNameError}>
         {errorMessage}
       </div>

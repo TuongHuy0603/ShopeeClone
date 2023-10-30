@@ -15,6 +15,7 @@ import { setProfileToLS } from 'src/utils/auth'
 
 import { ErrorResponse } from 'src/types/utils.type'
 import config from 'src/constant/config'
+import { useTranslation } from 'react-i18next'
 type FormData = Pick<UserSchema, 'name' | 'address' | 'avatar' | "date_of_birth" | 'phone'>
 type FormDataError = Omit<FormData, 'date_of_birth'> & {
   date_of_birth?: string
@@ -22,6 +23,7 @@ type FormDataError = Omit<FormData, 'date_of_birth'> & {
 
 const profileSchema = userSchema.pick(['name', 'address', 'avatar', 'date_of_birth', 'phone'])
 export default function Profile() {
+  const { t } = useTranslation('profile')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { setProfile } = useContext(AppContext)
   const [file, setFile] = useState<File>()
@@ -99,7 +101,7 @@ export default function Profile() {
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = event.target.files?.[0]
     if (fileFromLocal && fileFromLocal.size >= config.maxSizeUploadAvatar || !fileFromLocal?.type.includes("image")) {
-      toast.error('Dung lượng tối đa 1MB & định dạng là .JPEG,.PNG')
+      toast.error(`${t("Profile.storage")} ${t("Profile.type")}`)
     }
     setFile(fileFromLocal)
   }
@@ -107,10 +109,10 @@ export default function Profile() {
     <div className='rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow'>
       <div className="border-b border-b-gray-200 py-6">
         <h1 className="text-lg font-medium capitalize text-gray-900">
-          Hồ sơ của tôi
+          {t("Profile.my profile")}
         </h1>
         <div className="mt-1 text-sm text-gray-700">
-          Quản lý thông tin hồ sơ để bảo mật tài khoản
+          {t("Profile.manage")}
         </div>
         <form className="mt-8 flex flex-col reverse md:flex-row md:items-star" onSubmit={onSubmit}>
           <div className="md:w-[70%] mt-6 flex-grow md:mt-0 md:pr-12">
@@ -123,13 +125,13 @@ export default function Profile() {
               </div>
             </div>
             <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
-              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'>Tên</div>
+              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'> {t("Profile.name")}</div>
               <div className="sm:pl-5 sm:w-[80%]">
                 <Input register={register} name='name' placeholder='Tên' errorMessage={errors.name?.message} classNameInput='w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm' />
               </div>
             </div>
             <div className="mt-2 flex-col flex flex-wrap sm:flex-row">
-              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'>Số điện thoại</div>
+              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'> {t("Profile.phone")}</div>
               <div className="sm:pl-5 sm:w-[80%]">
                 <Controller control={control} name='phone' render={
                   ({ field }) => (
@@ -139,7 +141,7 @@ export default function Profile() {
               </div>
             </div>
             <div className="mt-2 flex-col flex flex-wrap sm:flex-row">
-              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'>Địa chỉ</div>
+              <div className='sm:w-[20%] truncate pt-3 sm:text-right capitalize'> {t("Profile.address")}</div>
               <div className="sm:pl-5 sm:w-[80%]">
                 <Input register={register} name='address' placeholder='Địa chỉ' errorMessage={errors.address?.message} classNameInput='w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm' />
               </div>
@@ -154,7 +156,7 @@ export default function Profile() {
               </div>
               <div className="sm:pl-5 sm:w-[80%]">
                 <Button type='submit' className='flex rounded-sm items-center h-9 bg-orange  px-5 text-center text-white text-sm hover:bg-orange/80'>
-                  Lưu
+                  {t("Profile.save")}
                 </Button>
               </div>
             </div>
@@ -169,11 +171,11 @@ export default function Profile() {
 
               }} />
               <button type='button' className="flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm" onClick={handleUpload}>
-                Chọn ảnh
+                {t("Profile.select image")}
               </button>
               <div className="mt-3 text-gray-400">
-                <div>Dung lượng tối đa 1MB</div>
-                <div>Định dạng:.JPEG,.PNG</div>
+                <div>{t("Profile.storage")}</div>
+                <div>{t("Profile.type")}</div>
               </div>
             </div>
           </div>

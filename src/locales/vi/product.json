@@ -1,0 +1,24 @@
+{
+  "product detail": {
+    "available": "Sản phẩm có sẵn",
+    "add": "Thêm vào giỏ hàng",
+    "buy": "Mua ngay",
+    "sold": "Đã bán",
+    "quantity": "Số lượng",
+    "description": "Mô tả sản phẩm",
+    "may like": "CÓ THỂ BẠN CŨNG THÍCH",
+    "off": "Giảm",
+    "recent cart": "Sản Phẩm Mới Thêm",
+    "more in cart": "Sản phẩm trong giỏ hàng",
+    "view cart": "Xem Giỏ Hàng",
+    "empty cart": "Giỏ hàng của bạn còn trống",
+    "price": "Đơn giá",
+    "total": "Tổng giá",
+    "action": "Thao tác",
+    "product": "Sản phâm",
+    "delete": "Xóa",
+    "select all": "Chọn tất cả",
+    "save": "Tiết kiệm",
+    "search": "Tìm kiếm"
+  }
+}

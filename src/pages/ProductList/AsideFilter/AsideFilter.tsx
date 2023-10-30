@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { NoUndefinedFiled } from 'src/types/utils.type'
 import RatingStars from 'src/pages/RatingStars'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
-
+import { useTranslation } from 'react-i18next'
 interface Props {
   queryConfig: QueryConfig
   categories: Category[]
@@ -19,6 +19,7 @@ interface Props {
 type FormData = NoUndefinedFiled<Pick<Schema, 'price_max' | 'price_min'>>
 const priceSchema = schema.pick(['price_max', 'price_min'])
 export default function AsideFilter({ queryConfig, categories }: Props) {
+  const { t } = useTranslation('home')
   const { category } = queryConfig
   const navigate = useNavigate()
   const { control, handleSubmit, trigger, formState: { errors } } = useForm<FormData>({
@@ -42,7 +43,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
         'text-orange': !category
       })}>
         <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current"><g fillRule="evenodd" stroke="none" strokeWidth={1}><g transform="translate(-373 -208)"><g transform="translate(155 191)"><g transform="translate(218 17)"><path d="m0 2h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /><path d="m0 6h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /><path d="m0 10h2v-2h-2zm4 0h7.1519633v-2h-7.1519633z" /></g></g></g></g></svg>
-        Tất Cả Danh Mục
+        {t('aside filter.all categories')}
       </Link>
       <div className='bg-gray-300 h-[1px] my-4' />
       <ul>
@@ -71,11 +72,11 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       </ul>
       <Link to={path.home} className='flex items-center font-bold mt-4 uppercase md:text-left md:text-left text-center  '>
         <svg enableBackground="new 0 0 15 15" viewBox="0 0 15 15" x={0} y={0} className="mr-3 h-4 w-3 fill-current stroke-current"><g><polyline fill="none" points="5.5 13.2 5.5 5.8 1.5 1.2 13.5 1.2 9.5 5.8 9.5 10.2" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit={10} /></g></svg>
-        Bộ lọc tìm kiếm
+        {t('aside filter.filter search')}
       </Link>
       <div className="bg-gray-300 h-[1px] my-4" />
       <div className="my-5">
-        <div>Khoảng giá</div>
+        <div>{t("aside filter.range")}</div>
         <form className="mt-2" onSubmit={() => {
           onSubmit
         }}>
@@ -84,7 +85,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
               control={control}
               name='price_min' render={({ field }) => {
                 return (
-                  <InputNumber type='text' placeholder='đ Từ' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm' {...field} onChange={
+                  <InputNumber type='text' placeholder={`đ ${t("aside filter.min")}`} className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm' {...field} onChange={
                     (e) => {
                       field.onChange(e)
                       trigger('price_max')
@@ -99,7 +100,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
               control={control}
               name='price_max' render={({ field }) => {
                 return (
-                  <InputNumber type='text' placeholder='đ Đến' className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'  {...field} onChange={
+                  <InputNumber type='text' placeholder={`đ ${t("aside filter.max")}`} className='grow' classNameInput='p-1 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'  {...field} onChange={
                     (e) => {
                       field.onChange(e)
                       trigger('price_min')
@@ -109,7 +110,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
               }} />
           </div>
           <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.price_min?.message}</div>
-          <Button className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>Áp dụng</Button>
+          <Button className='w-full p-2 uppercase bg-orange text-white text-sm hover:bg-orange-80 flex justify-center items-center'>{t("aside filter.apply")}</Button>
         </form>
       </div>
       <div className='bg-gray-300 h-[1px] my-4' />

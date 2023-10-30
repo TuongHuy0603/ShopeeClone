@@ -1,21 +1,31 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import ProductList from './pages/ProductList'
-import Register from './pages/Register'
+// import ProductList from './pages/ProductList'
+// import Register from './pages/Register'
 import RegisterLayout from './layout/RegisterLayout'
 import MainLayout from './layout/MainLayout'
 import { useContext, lazy, Suspense } from 'react'
 import { AppContext } from './contexts/app.context'
 import path from './constant/path'
-import ProductDetail from './pages/ProductDetail'
-import Cart from './pages/Cart'
+// import ProductDetail from './pages/ProductDetail'
+// import Cart from './pages/Cart'
 import CartLayout from './layout/CartLayout'
 import UserLayout from './pages/User/layout/UserLayout'
-import ChangePassword from './pages/User/ChangePassword'
-import HistoryPurchase from './pages/User/HistoryPurchase'
-import Profile from './pages/User/Profile'
-import Notfound from './pages/NotFound'
+import LoadingScreen from './pages/LoadingScreen'
+// import ChangePassword from './pages/User/ChangePassword'
+// import HistoryPurchase from './pages/User/HistoryPurchase'
+// import Profile from './pages/User/Profile'
+// import Notfound from './pages/NotFound'
 
 const Login = lazy(() => import('./pages/Login'))
+const ProductList = lazy(() => import('./pages/ProductList'))
+const Profile = lazy(() => import('./pages/User/Profile'))
+const Register = lazy(() => import('./pages/Register'))
+const ProductDetail = lazy(() => import('./pages/ProductDetail'))
+const Cart = lazy(() => import('./pages/Cart'))
+const ChangePassword = lazy(() => import('./pages/User/ChangePassword'))
+const HistoryPurchase = lazy(() => import('./pages/User/HistoryPurchase'))
+const Notfound = lazy(() => import('./pages/NotFound'))
+
 const ProtectedRoute = () => {
   const { isAuthenticated } = useContext(AppContext)
   return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
@@ -30,20 +40,26 @@ export default function useRouteElements() {
       path: path.productDetail,
       index: true,
       element: <MainLayout>
-        <ProductDetail />
+        <Suspense fallback={<LoadingScreen />}>
+          <ProductDetail />
+        </Suspense>
       </MainLayout>
     },
     {
       path: '/',
       index: true,
       element: <MainLayout>
-        <ProductList />
+        <Suspense fallback={<LoadingScreen />}>
+          <ProductList />
+        </Suspense>
       </MainLayout>
     },
     {
       path: '*',
       element: <MainLayout>
-        <Notfound />
+        <Suspense fallback={<LoadingScreen />}>
+          <Notfound />
+        </Suspense>
       </MainLayout>
     },
     {
@@ -57,7 +73,9 @@ export default function useRouteElements() {
               path: path.cart,
               element: (
                 <CartLayout>
-                  <Cart />
+                  <Suspense fallback={<LoadingScreen />}>
+                    <Cart />
+                  </Suspense>
                 </CartLayout>
               )
             },
@@ -66,7 +84,9 @@ export default function useRouteElements() {
               element: (
                 <MainLayout>
                   <UserLayout>
-                    <Profile />
+                    <Suspense fallback={<LoadingScreen />}>
+                      <Profile />
+                    </Suspense>
                   </UserLayout>
                 </MainLayout>
               )
@@ -76,7 +96,9 @@ export default function useRouteElements() {
               element: (
                 <MainLayout>
                   <UserLayout>
-                    <ChangePassword />
+                    <Suspense fallback={<LoadingScreen />}>
+                      <ChangePassword />
+                    </Suspense>
                   </UserLayout>
                 </MainLayout>
               )
@@ -86,7 +108,9 @@ export default function useRouteElements() {
               element: (
                 <MainLayout>
                   <UserLayout>
-                    <HistoryPurchase />
+                    <Suspense fallback={<LoadingScreen />}>
+                      <HistoryPurchase />
+                    </Suspense>
                   </UserLayout>
                 </MainLayout>
               )
@@ -103,7 +127,7 @@ export default function useRouteElements() {
         {
           path: path.login,
           element: <RegisterLayout>
-            <Suspense>
+            <Suspense fallback={<LoadingScreen />}>
               <Login />
             </Suspense>
           </RegisterLayout>
@@ -111,7 +135,9 @@ export default function useRouteElements() {
         {
           path: path.register,
           element: <RegisterLayout>
-            <Register />
+            <Suspense fallback={<LoadingScreen />}>
+              <Register />
+            </Suspense>
           </RegisterLayout>
         }
 

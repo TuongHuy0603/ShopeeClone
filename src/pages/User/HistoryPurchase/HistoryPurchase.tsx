@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 import { Link, createSearchParams } from 'react-router-dom'
 import purchaseApi from 'src/apis/purchase.api'
 import path from 'src/constant/path'
@@ -8,16 +9,18 @@ import useQueryParams from 'src/hooks/useQueryParams'
 import { PurchaseListStatus } from 'src/types/purchase.type'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
 
-const purchaseTabs = [
-  { status: purchaseStatus.all, name: "Tất cả" },
-  { status: purchaseStatus.waitForConfirmation, name: "Chờ xác nhận" },
-  { status: purchaseStatus.waitForGetting, name: "Chờ lấy hàng" },
-  { status: purchaseStatus.inProgress, name: "Đang giao" },
-  { status: purchaseStatus.delivered, name: "Đã giao" },
-  { status: purchaseStatus.cancelled, name: "Đã hủy" }
-]
+
 export default function HistoryPurchase() {
   const queryParams: { status?: string } = useQueryParams()
+  const { t } = useTranslation('profile')
+  const purchaseTabs = [
+    { status: purchaseStatus.all, name: `${t("Profile.all")}` },
+    { status: purchaseStatus.waitForConfirmation, name: `${t("Profile.to pay")}` },
+    { status: purchaseStatus.waitForGetting, name: `${t("Profile.to ship")}` },
+    { status: purchaseStatus.inProgress, name: `${t("Profile.to receive")}` },
+    { status: purchaseStatus.delivered, name: `${t("Profile.completed")}` },
+    { status: purchaseStatus.cancelled, name: `${t("Profile.cancelled")}` }
+  ]
   const status: number = Number(queryParams.status) || purchaseStatus.all
   const { data: purchasesInCartData } = useQuery({
     queryKey: ['purchases', { status }],
@@ -66,7 +69,7 @@ export default function HistoryPurchase() {
                 <div className="flex justify-end">
                   <div>
                     <span>
-                      Tổng giá tiền
+                      {t("Profile.total")}
                     </span>
                     <span className='ml-4 text-xl text-orange'>
                       đ{formatCurrency(purchase.product.price * purchase.buy_count)}

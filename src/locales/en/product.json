@@ -1,0 +1,24 @@
+{
+  "product detail": {
+    "available": "Available Products",
+    "add": "Add To Cart",
+    "buy": "Buy Now",
+    "sold": "Sold",
+    "quantity": "Quantity",
+    "description": "Product Description",
+    "may like": "YOU MAY ALSO LIKE",
+    "off": "OFF",
+    "recent cart": "Recently Added Products",
+    "more in cart": "More Products In Cart",
+    "view cart": "View My Shopping Cart",
+    "empty cart": "Your cart is empty",
+    "price": "Unit Price",
+    "total": "Total Price",
+    "action": "Actions",
+    "product": "Product",
+    "delete": "Delele",
+    "select all": "Select All",
+    "save": "Save",
+    "search": "Search"
+  }
+}

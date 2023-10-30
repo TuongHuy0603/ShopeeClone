@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { sortBy, order as orderConstant } from 'src/constant/sortBy'
 import { omit } from 'lodash'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   queryConfig: QueryConfig
@@ -15,6 +16,7 @@ interface Props {
 export default function SortProductList({ queryConfig, pageSize }: Props) {
   const { sort_by = sortBy.createdAt } = queryConfig
   const page = Number(queryConfig.page)
+  const { t } = useTranslation('home')
   const navigate = useNavigate()
   const isActiveSortBy = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
     return sort_by === sortByValue
@@ -43,18 +45,18 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
     <div className=' bg-gray-300/40 py-4 px-3'>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center flex-wrap gap-2">
-          <div>Sắp xếp theo</div>
+          <div>{t('aside filter.sort by')}</div>
           <button className={classNames('h-8 px-4 text-sm capitalize text-canter', {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.view), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.view)
-          })} onClick={() => handleSort(sortBy.view)}>Phổ biến</button>
+          })} onClick={() => handleSort(sortBy.view)}>{t('aside filter.popular')}</button>
 
           <button className={classNames('h-8 px-4 text-sm capitalize text-canter', {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.createdAt), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.createdAt)
-          })} onClick={() => handleSort(sortBy.createdAt)}>Mới nhất </button>
+          })} onClick={() => handleSort(sortBy.createdAt)}>{t('aside filter.latest')}</button>
 
           <button className={classNames('h-8 px-4 text-sm capitalize text-canter', {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.sold), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.sold)
-          })} onClick={() => handleSort(sortBy.sold)}>Bán chạy</button>
+          })} onClick={() => handleSort(sortBy.sold)}>{t('aside filter.top')}</button>
           <select className={classNames("h-8 px-4 py-0 capitalize outline-none border-none", {
             ' bg-orange text-white  hover:bg-orange/80': isActiveSortBy(sortBy.price), 'bg-white text-black hover:bg-slate-100': !isActiveSortBy(sortBy.price)
           })}
@@ -62,9 +64,9 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
               handlePriceOrder(e.target.value as Exclude<ProductListConfig['order'], undefined>)
 
             }}>
-            <option className='bg-white text-black' defaultValue={''} value='' disabled>Giá</option>
-            <option className='bg-white text-black' value={orderConstant.asc}>Giá: Thấp đến cao</option>
-            <option className='bg-white text-black' value={orderConstant.desc}>Giá: Cao đến thấp</option>
+            <option className='bg-white text-black' disabled>{t('aside filter.price')}</option>
+            <option className='bg-white text-black' value={orderConstant.asc}>{t('aside filter.price lth')}</option>
+            <option className='bg-white text-black' value={orderConstant.desc}>{t('aside filter.price htl')}</option>
           </select>
         </div>
         <div className="flex items-center">

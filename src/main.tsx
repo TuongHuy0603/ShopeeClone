@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { AppProvider } from './contexts/app.context.tsx'
+import 'src/i18n/i18'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
