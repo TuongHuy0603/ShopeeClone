@@ -13,6 +13,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
+import { Helmet } from 'react-helmet-async'
 type FormData = Schema
 export default function Register() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -48,6 +49,10 @@ export default function Register() {
   })
   return (
     <div className='bg-orange'>
+      <Helmet>
+        <title> Đăng ký | Shopee Clone</title>
+        <meta name='description' content='Đăng ký vào dự án shopee clone' />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4">
         <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-32 lg:pr-10'>
           <div className="lg:col-span-2 lg:col-start-4">

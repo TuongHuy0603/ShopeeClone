@@ -14,6 +14,7 @@ import { keyBy } from 'lodash'
 import { toast } from 'react-toastify'
 import { AppContext } from 'src/contexts/app.context'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 
 export default function Cart() {
 
@@ -139,6 +140,10 @@ export default function Cart() {
   }
   return (
     <div className='bg-neutral-100 py-16'>
+      <Helmet>
+        <title> Giỏ hàng | Shopee Clone</title>
+        <meta name='description' content='Giỏ hàng dự án shopee clone' />
+      </Helmet>
       <div className="container">
         {extendPurchases.length > 0 ? (
           <>
